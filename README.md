@@ -37,11 +37,11 @@ easypick.setup({
 			previewer = easypick.previewers.branch_diff(base_branch)
 		},
 		
-		-- list files that have conflicts with diffs in prevew
+		-- list files that have conflicts with diffs in preview
 		{
 			name = "conflicts",
 			command = "git diff --name-only --diff-filter=U --relative",
-			previewer = easypick.previewers.diff
+			previewer = easypick.previewers.file_diff()
 		},
 	}
 })
