@@ -2,8 +2,7 @@ local has_telescope, telescope = pcall(require, 'telescope')
 local telescope_pickers = require "telescope.pickers"
 local finders = require "telescope.finders"
 local conf = require("telescope.config").values
-
-M = M or {}
+local previewers = require('easypick.previewers')
 
 if not has_telescope then
   error('This plugin requires nvim-telescope/telescope.nvim')
@@ -54,7 +53,7 @@ local picker = function(telescope_picker_opts, pickers)
 end
 
 
-M.setup = function(args)
+local setup = function(args)
 	local pickers = args.pickers
 	local picker_names = {}
 	for key, value in pairs(pickers) do
@@ -70,4 +69,7 @@ M.setup = function(args)
 	vim.api.nvim_create_user_command('Easypick', function(opts) picker(opts, pickers) end, command_opts)
 end
 
-return M
+return {
+	setup = setup,
+	previewers = previewers
+}
