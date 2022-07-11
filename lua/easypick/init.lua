@@ -38,7 +38,7 @@ local picker = function(telescope_picker_opts, pickers)
 
 	local files = {}
 
-	for token in string.gmatch(result, "[^%s]+") do
+	for token in string.gmatch(result, "[^%c]+") do
 	   table.insert(files, token)
 	end
 
