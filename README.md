@@ -1,6 +1,6 @@
 # easypick.nvim
 
-Easypick is a neovim plugin that lets you easily create Telescope pickers (see [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)) from arbitraty console commands.
+Easypick is a nevis plugin that lets you easily create Telescope pickers (see [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)) from arbitraty console commands.
 
 # installation
 
