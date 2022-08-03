@@ -34,7 +34,7 @@ easypick.setup({
 		{
 			name = "changed_files",
 			command = "git diff --name-only $(git merge-base HEAD " .. base_branch .. " )",
-			previewer = easypick.previewers.branch_diff(base_branch)
+			previewer = easypick.previewers.branch_diff({base_branch = base_branch})
 		},
 		
 		-- list files that have conflicts with diffs in preview
