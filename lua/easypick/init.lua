@@ -1,27 +1,33 @@
-local has_telescope, telescope = pcall(require, 'telescope')
+local has_telescope, _ = pcall(require, 'telescope')
 local telescope_pickers = require "telescope.pickers"
 local finders = require "telescope.finders"
 local conf = require("telescope.config").values
 local previewers = require('easypick.previewers')
+local actions = require "easypick.actions"
 
 if not has_telescope then
   error('This plugin requires nvim-telescope/telescope.nvim')
 end
 
-local picker = function(telescope_picker_opts, pickers)
+local picker = function(picker_name, pickers)
 	local command = ''
 	local previewer = {}
-	local picker_name = telescope_picker_opts.args or ''
+	local action = function ()
+	-- dont do anything	
+	end
+	local opts = {}
 
-	for key, value in pairs(pickers) do
+	for _, value in pairs(pickers) do
 		if value.name == picker_name then
 			command = value.command
 			previewer = value.previewer
+			action = value.action
+			opts = value.opts
 		end
 	end
 
 	if command == '' then
-		print('picker with name ' .. telescope_picker_opts.args .. ' does not exist')
+		print('picker with name ' .. picker_name .. ' does not exist')
 		return
 	end
 
@@ -42,13 +48,14 @@ local picker = function(telescope_picker_opts, pickers)
 	   table.insert(files, token)
 	end
 
-	telescope_pickers.new(telescope_picker_opts, {
+	telescope_pickers.new(opts, {
 		prompt_title = picker_name,
 		finder = finders.new_table {
 			results = files
 		},
-		sorter = conf.generic_sorter(telescope_picker_opts),
-		previewer = previewer
+		sorter = conf.generic_sorter(opts),
+		previewer = previewer,
+		attach_mappings = action
 	}):find()
 end
 
@@ -56,7 +63,7 @@ end
 local setup = function(args)
 	local pickers = args.pickers
 	local picker_names = {}
-	for key, value in pairs(pickers) do
+	for _, value in pairs(pickers) do
 		table.insert(picker_names, value.name)
 	end
 	local command_opts = {
@@ -66,10 +73,11 @@ local setup = function(args)
 			return picker_names
 		end
 	}
-	vim.api.nvim_create_user_command('Easypick', function(opts) picker(opts, pickers) end, command_opts)
+	vim.api.nvim_create_user_command('Easypick', function(opts) picker(opts.args, pickers) end, command_opts)
 end
 
 return {
 	setup = setup,
-	previewers = previewers
+	previewers = previewers,
+	actions = actions
 }
