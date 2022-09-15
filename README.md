@@ -46,6 +46,7 @@ easypick.setup({
 	}
 })
 ```
+More recipes are available in project [wiki](https://github.com/axkirillov/easypick.nvim/wiki)
 
 # usage
 
