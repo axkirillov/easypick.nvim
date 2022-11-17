@@ -6,14 +6,21 @@ local previewers = require('easypick.previewers')
 local actions = require "easypick.actions"
 
 if not has_telescope then
-  error('This plugin requires nvim-telescope/telescope.nvim')
+	error('This plugin requires nvim-telescope/telescope.nvim')
 end
 
 local picker = function(picker_name, pickers)
 	local command = ''
 	local previewer = {}
-	local action = function ()
-	-- dont do anything	
+	local action = function()
+		-- dont do anything
+	end
+	local entry_maker = function(entry)
+		return {
+			value = entry,
+			display = entry,
+			ordinal = entry,
+		}
 	end
 	local opts = {}
 
@@ -22,6 +29,7 @@ local picker = function(picker_name, pickers)
 			command = value.command
 			previewer = value.previewer
 			action = value.action
+			entry_maker = value.entry_maker
 			opts = value.opts
 		end
 	end
@@ -45,13 +53,14 @@ local picker = function(picker_name, pickers)
 	local files = {}
 
 	for token in string.gmatch(result, "[^%c]+") do
-	   table.insert(files, token)
+		table.insert(files, token)
 	end
 
 	telescope_pickers.new(opts, {
 		prompt_title = picker_name,
 		finder = finders.new_table {
-			results = files
+			results = files,
+			entry_maker = entry_maker,
 		},
 		sorter = conf.generic_sorter(opts),
 		previewer = previewer,
