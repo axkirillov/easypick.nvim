@@ -22,16 +22,17 @@ end
 local function run_command_prepended(prefix)
 	if prefix == nil then
 		prefix = ''
+		else
+		prefix = prefix .. ' '
 	end
 
 	return function (prompt_bufnr, _)
 		actions.select_default:replace(function()
 			actions.close(prompt_bufnr)
 			local selection = action_state.get_selected_entry()
-			vim.cmd('prefix' .. ' ' .. selection[1])
+			vim.cmd(prefix .. selection[1])
 		end)
 		return true
-
 	end
 end
 
