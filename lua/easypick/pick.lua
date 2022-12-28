@@ -16,7 +16,7 @@ local function all(pickers)
 			results = picker_names,
 		},
 		sorter = conf.generic_sorter(opts),
-		attach_mappings = actions.run_easypick
+		attach_mappings = actions.nvim_command("Easypick")
 	}):find()
 end
 

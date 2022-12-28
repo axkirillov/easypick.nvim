@@ -19,7 +19,7 @@ local function run_easypick(prompt_bufnr, _)
 	return true
 end
 
-local function run_command_prepended(prefix)
+local function nvim_command(prefix)
 	if prefix == nil then
 		prefix = ''
 		else
@@ -39,5 +39,5 @@ end
 return {
 	run_nvim_command = run_nvim_command,
 	run_easypick = run_easypick,
-	run_command_prepended = run_command_prepended
+	nvim_command = nvim_command
 }
