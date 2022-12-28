@@ -4,27 +4,10 @@ local finders = require "telescope.finders"
 local conf = require("telescope.config").values
 local previewers = require('easypick.previewers')
 local actions = require "easypick.actions"
-local themes = require "telescope.themes"
 local pick = require "easypick.pick"
 
 if not has_telescope then
 	error('This plugin requires nvim-telescope/telescope.nvim')
-end
-
-local function easypick(pickers)
-	local opts = themes.get_dropdown({})
-	local picker_names = {}
-	for _, value in pairs(pickers) do
-		table.insert(picker_names, value.name)
-	end
-	telescope_pickers.new(opts, {
-		prompt_title = "Easypick",
-		finder = finders.new_table {
-			results = picker_names,
-		},
-		sorter = conf.generic_sorter(opts),
-		attach_mappings = actions.run_easypick
-	}):find()
 end
 
 local picker = function(picker_name, pickers)
@@ -102,7 +85,7 @@ local setup = function(args)
 			return picker_names
 		end
 	}
-	vim.api.nvim_create_user_command('Easypick', function(opts) picker(opts.args, pickers) end, command_opts)
+	vim.api.nvim_create_user_command('Easypick', function(opts) pick.one(opts.args, pickers) end, command_opts)
 end
 
 return {
