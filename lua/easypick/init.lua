@@ -9,7 +9,26 @@ if not has_telescope then
 	error('This plugin requires nvim-telescope/telescope.nvim')
 end
 
+local function easypick(pickers)
+	local opts = {}
+	local picker_names = {}
+	for _, value in pairs(pickers) do
+		table.insert(picker_names, value.name)
+	end
+	telescope_pickers.new(opts, {
+		prompt_title = "Easypick",
+		finder = finders.new_table {
+			results = picker_names,
+		},
+		sorter = conf.generic_sorter(opts),
+		attach_mappings = actions.run_easypick
+	}):find()
+end
+
 local picker = function(picker_name, pickers)
+	if picker_name == '' then
+		return easypick(pickers)
+	end
 	local command = ''
 	local previewer = {}
 	local action = function()
@@ -68,7 +87,6 @@ local picker = function(picker_name, pickers)
 	}):find()
 end
 
-
 local setup = function(args)
 	local pickers = args.pickers
 	local picker_names = {}
@@ -76,7 +94,7 @@ local setup = function(args)
 		table.insert(picker_names, value.name)
 	end
 	local command_opts = {
-		nargs = 1,
+		nargs = "*",
 		complete = function()
 			-- return completion candidates as a list-like table
 			return picker_names
