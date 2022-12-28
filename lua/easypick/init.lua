@@ -4,13 +4,15 @@ local finders = require "telescope.finders"
 local conf = require("telescope.config").values
 local previewers = require('easypick.previewers')
 local actions = require "easypick.actions"
+local themes = require "telescope.themes"
+local pick = require "easypick.pick"
 
 if not has_telescope then
 	error('This plugin requires nvim-telescope/telescope.nvim')
 end
 
 local function easypick(pickers)
-	local opts = {}
+	local opts = themes.get_dropdown({})
 	local picker_names = {}
 	for _, value in pairs(pickers) do
 		table.insert(picker_names, value.name)
@@ -27,7 +29,7 @@ end
 
 local picker = function(picker_name, pickers)
 	if picker_name == '' then
-		return easypick(pickers)
+		return pick.all(pickers)
 	end
 	local command = ''
 	local previewer = {}
