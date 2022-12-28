@@ -55,4 +55,7 @@ More recipes are available in project [wiki](https://github.com/axkirillov/easyp
 
 After the setup is called the Easypick command becomes available with all your pickers added to tab completion.
 
-![image](https://user-images.githubusercontent.com/32141102/176906224-3b8c138e-7707-42d8-b4d1-bbe47a0afa24.png)
+![image](https://user-images.githubusercontent.com/32141102/209808931-e7b7dd8b-75ed-419d-9c81-24fb409b3059.png)
+
+Running the :Easypick command with no arguments should result in the picker picker being called
+![image](https://user-images.githubusercontent.com/32141102/209807394-4dfe2b85-dcdf-45ec-b8d7-b8bfec0c4dc1.png)
