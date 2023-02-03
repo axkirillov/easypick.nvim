@@ -6,12 +6,12 @@ Easypick is a neovim plugin that lets you easily create Telescope pickers (see [
 
 # installation
 
-```
+```lua
 use {'axkirillov/easypick.nvim', requires = 'nvim-telescope/telescope.nvim'}
 ```
 
 # configuration
-```
+```lua
 local easypick = require("easypick")
 
 -- only required for the example to work
@@ -32,13 +32,13 @@ easypick.setup({
 			previewer = easypick.previewers.default()
 		},
 
-		-- diff current branch with base_branch and show files that changed with respective diffs in preview 
+		-- diff current branch with base_branch and show files that changed with respective diffs in preview
 		{
 			name = "changed_files",
 			command = "git diff --name-only $(git merge-base HEAD " .. base_branch .. " )",
 			previewer = easypick.previewers.branch_diff({base_branch = base_branch})
 		},
-		
+
 		-- list files that have conflicts with diffs in preview
 		{
 			name = "conflicts",
