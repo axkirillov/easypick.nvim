@@ -20,6 +20,37 @@ local function all(pickers)
 	}):find()
 end
 
+local function run_command(command)
+	local handle = io.popen(command)
+
+	if (handle == nil) then
+		print('could not run specified command:' .. command)
+		return
+	end
+
+	local output = handle:read("*a")
+
+	handle:close()
+
+	return output
+end
+
+local function parse_command_output(output)
+	local list = {}
+
+	-- check if output is a string
+	if type(output) ~= 'string' then
+		print('command did not return a string')
+		return
+	end
+
+	for token in string.gmatch(output, "[^%c]+") do
+		table.insert(list, token)
+	end
+
+	return list
+end
+
 local function one(picker_name, pickers)
 	if picker_name == '' then
 		return all(pickers)
@@ -53,27 +84,14 @@ local function one(picker_name, pickers)
 		return
 	end
 
-	local handle = io.popen(command)
+	local result = run_command(command)
 
-	if (handle == nil) then
-		print('could not run specified command:' .. command)
-		return
-	end
-
-	local result = handle:read("*a")
-
-	handle:close()
-
-	local files = {}
-
-	for token in string.gmatch(result, "[^%c]+") do
-		table.insert(files, token)
-	end
+	local list = parse_command_output(result)
 
 	telescope_pickers.new(opts, {
 		prompt_title = picker_name,
 		finder = finders.new_table {
-			results = files,
+			results = list,
 			entry_maker = entry_maker,
 		},
 		sorter = conf.generic_sorter(opts),
@@ -82,7 +100,22 @@ local function one(picker_name, pickers)
 	}):find()
 end
 
+local function one_off(command)
+	local result = run_command(command)
+
+	local list = parse_command_output(result)
+
+	telescope_pickers.new({}, {
+		prompt_title = command,
+		finder = finders.new_table {
+			results = list,
+		},
+		sorter = conf.generic_sorter({}),
+	}):find()
+end
+
 return {
 	all = all,
-	one = one
+	one = one,
+	one_off = one_off,
 }

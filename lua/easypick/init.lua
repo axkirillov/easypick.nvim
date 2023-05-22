@@ -26,5 +26,6 @@ end
 return {
 	setup = setup,
 	previewers = previewers,
-	actions = actions
+	actions = actions,
+	one_off = pick.one_off,
 }
