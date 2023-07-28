@@ -1,5 +1,3 @@
-[![Hits-of-Code](https://hitsofcode.com/github/axkirillov/easypick.nvim?branch=main)](https://hitsofcode.com/github/axkirillov/easypick.nvim/view?branch=main)
-
 # easypick.nvim
 
 Easypick is a neovim plugin that lets you easily create Telescope pickers (see [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)) from arbitrary console commands.
