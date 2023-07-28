@@ -14,11 +14,11 @@ end
 local function nvim_command(prefix)
 	if prefix == nil then
 		prefix = ''
-		else
+	else
 		prefix = prefix .. ' '
 	end
 
-	return function (prompt_bufnr, _)
+	return function(prompt_bufnr, _)
 		actions.select_default:replace(function()
 			actions.close(prompt_bufnr)
 			local selection = action_state.get_selected_entry()
