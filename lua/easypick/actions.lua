@@ -11,18 +11,22 @@ local function run_nvim_command(prompt_bufnr, _)
 	return true
 end
 
-local function nvim_command(prefix)
+local function nvim_command(prefix, postfix)
 	if prefix == nil then
 		prefix = ''
 	else
 		prefix = prefix .. ' '
 	end
 
+	if postfix == nil then
+		postfix = ''
+  end
+
 	return function(prompt_bufnr, _)
 		actions.select_default:replace(function()
 			actions.close(prompt_bufnr)
 			local selection = action_state.get_selected_entry()
-			vim.cmd(prefix .. selection[1])
+			vim.cmd(prefix .. selection[1] .. postfix)
 		end)
 		return true
 	end
