@@ -32,6 +32,11 @@ local function nvim_commandf(template)
 		actions.select_default:replace(function()
 			actions.close(prompt_bufnr)
 			local selection = action_state.get_selected_entry()
+			local count = select(2, string.gsub(template, "%%s", ""))
+			if count ~= 1 then
+				vim.notify("String does not have exactly one %s placeholder", vim.log.levels.ERROR)
+				return false
+			end
 			vim.cmd(string.format(template, selection[1]))
 		end)
 		return true
