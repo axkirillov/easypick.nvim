@@ -1,9 +1,7 @@
 # easypick.nvim
-
 Easypick is a neovim plugin that lets you easily create Telescope pickers (see [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)) from arbitrary console commands.
 
 # installation
-
 ```lua
 use {'axkirillov/easypick.nvim', requires = 'nvim-telescope/telescope.nvim'}
 ```
@@ -46,14 +44,29 @@ easypick.setup({
 	}
 })
 ```
-# recipes
-More recipes are available in project [wiki](https://github.com/axkirillov/easypick.nvim/wiki)
 
 # usage
-
 After the setup is called the Easypick command becomes available with all your pickers added to tab completion.
 
 ![image](https://user-images.githubusercontent.com/32141102/209808931-e7b7dd8b-75ed-419d-9c81-24fb409b3059.png)
 
 Running the :Easypick command with no arguments should result in the picker picker being called
 ![image](https://user-images.githubusercontent.com/32141102/209807394-4dfe2b85-dcdf-45ec-b8d7-b8bfec0c4dc1.png)
+
+## one-off picker
+A one off picker can be created by calling
+
+`require('easypick').one_off('type your command here')`
+
+This will open up a picker just for the typed in command with default selection action and previewer
+
+## actions
+The default action opens a file. Specify the `action` field in your picker config if you want a custom action.
+
+`easypick.actions.nvim_commandf(template)` takes a template string and inserts the selected entry at the `%s` position, then executes the command.
+
+For example `'!make %s'` will insert the entry at `%s` position and execute the corresponding command
+
+# recipes
+More recipes are available in [wiki](https://github.com/axkirillov/easypick.nvim/wiki)
+
