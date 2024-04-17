@@ -11,7 +11,7 @@ use {'axkirillov/easypick.nvim', requires = 'nvim-telescope/telescope.nvim'}
 local easypick = require("easypick")
 
 -- only required for the example to work
-local base_branch = "develop"
+local base_branch = vim.fn.system("git rev-parse --symbolic-full-name refs/remotes/origin/HEAD | sed 's!.*/!!'") or "main"
 
 easypick.setup({
 	pickers = {
