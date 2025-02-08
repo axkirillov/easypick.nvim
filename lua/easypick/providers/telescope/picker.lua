@@ -1,7 +1,7 @@
 local telescope_pickers = require "telescope.pickers"
 local finders = require "telescope.finders"
 local conf = require("telescope.config").values
-local actions = require "easypick.actions"
+local actions = require ("easypick.providers.telescope.actions")
 local themes = require "telescope.themes"
 
 local function all(pickers)
@@ -72,7 +72,7 @@ local function one(picker_name, pickers)
 	for _, value in pairs(pickers) do
 		if value.name == picker_name then
 			command = value.command
-			previewer = value.previewer
+			previewer = value.previewer()
 			action = value.action
 			entry_maker = value.entry_maker
 			opts = value.opts
@@ -100,7 +100,7 @@ local function one(picker_name, pickers)
 	}):find()
 end
 
-local function one_off(command)
+local function one_off_picker(command)
 	local result = run_command(command)
 
 	local list = parse_command_output(result)
@@ -117,5 +117,7 @@ end
 return {
 	all = all,
 	one = one,
-	one_off = one_off,
+	one_off_picker = one_off_picker,
+	actions = actions,
+	previewers = require("easypick.providers.telescope.previewers")
 }

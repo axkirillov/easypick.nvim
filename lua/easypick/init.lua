@@ -1,31 +1,32 @@
-local has_telescope, _ = pcall(require, 'telescope')
-local previewers = require('easypick.previewers')
-local actions = require "easypick.actions"
-local pick = require "easypick.pick"
+local provider = require("easypick.provider")
+local command = require("easypick.command")
+local state = require("easypick.state")
 
-if not has_telescope then
-	error('This plugin requires nvim-telescope/telescope.nvim')
-end
+---@class Easypick
+---@field defaults Easypick.Config
+---@field setup function
+---@field previewers table
+---@field actions table
+---@field one_off function
+local M = {}
 
-local setup = function(args)
-	local pickers = args.pickers
-	local picker_names = {}
-	for _, value in pairs(pickers) do
-		table.insert(picker_names, value.name)
-	end
-	local command_opts = {
-		nargs = "*",
-		complete = function()
-			-- return completion candidates as a list-like table
-			return picker_names
-		end
-	}
-	vim.api.nvim_create_user_command('Easypick', function(opts) pick.one(opts.args, pickers) end, command_opts)
-end
-
-return {
-	setup = setup,
-	previewers = previewers,
-	actions = actions,
-	one_off = pick.one_off,
+---@class Easypick.Config
+---@field pickers table
+---@field provider "telescope" | "fzf-lua"
+M.defaults = {
+	provider = "telescope",
+	pickers = {},
 }
+
+M.previewers = require("easypick.previewers")
+M.actions = require("easypick.actions")
+
+---@param opts Easypick.Config
+M.setup = function(opts)
+	opts = vim.tbl_deep_extend('force', M.defaults, opts or {})
+	state.provider = provider.new(opts.provider)
+	command.create(opts.pickers)
+	M.one_off = state.provider.one_off_picker
+end
+
+return M
