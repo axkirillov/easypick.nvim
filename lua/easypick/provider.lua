@@ -11,6 +11,7 @@ local M = {}
 ---@param provider "telescope" | "fzf-lua"
 ---@return Easypick.Provider
 M.new = function(provider)
+	provider = provider or "telescope"
 	if provider == "telescope" then
 		local has_telescope, _ = pcall(require, 'telescope')
 		if not has_telescope then
