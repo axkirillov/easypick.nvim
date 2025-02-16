@@ -8,7 +8,6 @@ require("lazy.minit").setup({
 	spec = {
 		{
 			"nvim-telescope/telescope.nvim",
-			"ibhagwan/fzf-lua",
 		},
 	},
 })

@@ -23,7 +23,7 @@ M.new = function(provider)
 		if not has_fzf_lua then
 			error('You have to install ibhagwan/fzf-lua')
 		end
-		error('fzf-lua is not supported yet')
+		return require("easypick.providers.fzf-lua.picker")
 	end
 	error('Unknown provider: ' .. provider)
 end
