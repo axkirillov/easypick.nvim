@@ -59,6 +59,7 @@ local function one(picker_name, pickers)
 	local previewer = {}
 	local action = function()
 		-- dont do anything
+		return true
 	end
 	local entry_maker = function(entry)
 		return {
