@@ -72,7 +72,7 @@ local function one(picker_name, pickers)
 	for _, value in pairs(pickers) do
 		if value.name == picker_name then
 			command = value.command
-			previewer = value.previewer()
+			previewer = value.previewer
 			action = value.action
 			entry_maker = value.entry_maker
 			opts = value.opts
