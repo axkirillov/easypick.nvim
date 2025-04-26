@@ -68,6 +68,16 @@ The default action opens a file. Specify the `action` field in your picker confi
 
 For example `'!make %s'` will insert the entry at `%s` position and execute the corresponding command
 
+## Lua API
+You can call your created pickers using lua code in two ways
+
+```lua
+local pickers = { ... }
+require("easypick").setup(pickers = pickers)
+require("easypick").one("ls", pickers)
+require("easypick").ls()
+```
+
 # recipes
 More recipes are available in [wiki](https://github.com/axkirillov/easypick.nvim/wiki)
 
