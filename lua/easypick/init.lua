@@ -28,4 +28,5 @@ return {
 	previewers = previewers,
 	actions = actions,
 	one_off = pick.one_off,
+	one = pick.one,
 }
